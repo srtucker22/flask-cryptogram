@@ -16,7 +16,6 @@ app = Flask(__name__)
 
 @app.route('/')
 def hello():
-  solve_cryptogram('mM4fHYeDZzKzDYdhe')
   return 'Hello World!'
 
 @app.route('/solve', methods = ['POST'])
@@ -220,7 +219,7 @@ class SimulatedAnnealing:
 
 
 if __name__ == '__main__':
-  client = MeteorClient('ws://ddp--2272-cryptograms.meteor.com/sockjs/382/z7hmzqij/websocket')
+  client = MeteorClient('ws://ddp--3395-cryptograms.meteor.com/sockjs/141/websocket')
 
 
   client.on('logged_in', logged_in)
