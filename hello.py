@@ -219,7 +219,7 @@ class SimulatedAnnealing:
 
 
 if __name__ == '__main__':
-  client = MeteorClient('ws://ddp--3395-cryptograms.meteor.com/sockjs/141/websocket')
+  client = MeteorClient('ws://ddp--9611-cryptograms.meteor.com/sockjs/862/websocket')
 
 
   client.on('logged_in', logged_in)
