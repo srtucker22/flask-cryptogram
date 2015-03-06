@@ -14,10 +14,13 @@ import json
 app = Flask(__name__)
 
 
+# the basics
 @app.route('/')
 def hello():
   return 'Hello World!'
 
+
+# post -- solve the cryptogram, pass guess_id
 @app.route('/solve', methods = ['POST'])
 def solve():
   id = request.form.get('id', None)
@@ -27,48 +30,56 @@ def solve():
   else:
     return 'no id'
 
+
+# subscribe callback
 def subscribed(subscription):
   print '* SUBSCRIBED {}'.format(subscription)
 
 
+# unsubscribe callback
 def unsubscribed(subscription):
   print '* UNSUBSCRIBED {}'.format(subscription)
 
 
+# collection element added callback
 def added(collection, id, fields):
   print '* ADDED {} {}'.format(collection, id)
   for key, value in fields.items():
     print '  - FIELD {}'.format(key)
 
 
+# call fuction callback
 def callback_function(error, result):
   if error:
     print error
 
 
+# solve the cryptogram method
 def solve_cryptogram(id):
   si = SimulatedAnnealing()
   return si.solve(id)
 
 
+# connect to meteor callback
 def connected():
   print '* CONNECTED'
 
 
+# logged in callback
 def logged_in(data):
   print '* LOGGED IN {}'.format(data)
 
 
-def subscription_callback(error):
-  if error:
-    print error
-
-
+# cryptogram solving class
 class SimulatedAnnealing:
+
+
+  # initalize the object
   def __init__(self):
     self.exit = False
 
 
+  # solve the cryptogram
   def solve(self, id):
 
     print 'solving ', id
@@ -218,9 +229,11 @@ class SimulatedAnnealing:
       return 'returned'
 
 
+# main thread
 if __name__ == '__main__':
-  client = MeteorClient('ws://ddp--9611-cryptograms.meteor.com/sockjs/862/websocket')
 
+  # log into meteor as admin
+  client = MeteorClient('http://localhost:5000')
 
   client.on('logged_in', logged_in)
   client.on('subscribed', subscribed)
@@ -228,9 +241,9 @@ if __name__ == '__main__':
   client.on('connected', connected)
   client.on('added', added)
 
-
   client.connect()
   client.subscribe('guesses')
-  client.login(user='admin', password='apple1')
+  client.login(user='admin', password='password')
 
+  # run the app
   app.run(threaded=True)
